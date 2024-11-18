@@ -1,6 +1,9 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
+import { View, Text, StyleSheet, FlatList, Button } from "react-native";
 
 export default function CoktailsScreen() {
+  const router = useRouter();
+
   const cocktailsList = [
     {
       id: 1,
@@ -22,17 +25,24 @@ export default function CoktailsScreen() {
     },
   ];
 
+  const handleNavigateToCocktailDetails = () => {
+    router.push("cocktails/1");
+  };
+
   return (
     <View style={styles.container}>
       <Text>Liste des cocktails</Text>
 
-      {cocktailsList.map((cocktail) => (
-        <View key={cocktail.id}>
-          <Text>{cocktail.title}</Text>
-          <Text>{cocktail.description}</Text>
-          <Text>Ingrédients: {cocktail.ingredients.join(", ")}</Text>
-        </View>
-      ))}
+      <FlatList
+        data={cocktailsList}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.title}</Text>
+            <Button title="voir le cocktail" onPress={handleNavigateToCocktailDetails} />
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </View>
   );
 }
