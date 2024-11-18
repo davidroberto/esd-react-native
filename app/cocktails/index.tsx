@@ -25,8 +25,12 @@ export default function CoktailsScreen() {
     },
   ];
 
-  const handleNavigateToCocktailDetails = () => {
-    router.push("cocktails/1");
+  // je créé une fonction qui sera appelée au click sur le bouton de chaque
+  // cocktail
+  // je récupère l'id du cocktail cliqué en parametre
+  const handleNavigateToCocktailDetails = (cocktailId: number) => {
+    // je redirige l'utilisateur vers le screen cocktails/[id].tsx (détail du cocktail)
+    router.push("cocktails/" + cocktailId);
   };
 
   return (
@@ -38,7 +42,7 @@ export default function CoktailsScreen() {
         renderItem={({ item }) => (
           <View>
             <Text>{item.title}</Text>
-            <Button title="voir le cocktail" onPress={handleNavigateToCocktailDetails} />
+            <Button title="voir le cocktail" onPress={() => handleNavigateToCocktailDetails(item.id)} />
           </View>
         )}
         keyExtractor={(item) => item.id.toString()}
